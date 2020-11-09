@@ -5,11 +5,13 @@ interface IStyledInputProps {
     customStyle?: React.CSSProperties;
     onChange?: (ev: React.ChangeEvent<HTMLInputElement>) => void;
     label: string;
+    value: string;
 }
-const StyledInput = ({ customStyle, onChange, label }: IStyledInputProps) => {
+const StyledInput = ({ customStyle, onChange, label, value }: IStyledInputProps) => {
     return (<div style={{margin: 4}}>
             <label style={{fontWeight: 600}}>{label}</label>
-            <input 
+            <input
+                value={value} 
                 onChange={onChange}
                 style={customStyle ??
                 {

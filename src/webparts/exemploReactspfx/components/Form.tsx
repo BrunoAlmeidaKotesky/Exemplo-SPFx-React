@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect, useMemo, useCallback, memo } from 'react';
+import { useState, useEffect, useRef, useCallback, memo } from 'react';
 import { OptionValue, Option } from '../models/interfaces/IComboboxProps';
 import {getLanguages, listData, sendData, ILista} from '../services/SharepointService';
 import Input from './Input';
@@ -7,7 +7,7 @@ import ComboBox from './Select';
 import Button from './Button';
 
 const Form = (): JSX.Element => {
-    const targets = [
+    const mockLanguages = [
         { value: "es3", label: "ECMAScript 3" },
         { value: "es5", label: "ECMAScript 5" },
         { value: "es2015", label: "ECMAScript 2015" },
@@ -20,17 +20,16 @@ const Form = (): JSX.Element => {
     const [title, setTitle] = useState(null);
     const [description, setDescription] = useState(null);
     const [listItems, setListItems] = useState<ILista[]>([]);
+    const [message, setMessage] = useState('');
 
     const [opcoes, setOpcoes] = useState<Option<number>[]>([]);
-    const formStyle: React.CSSProperties = useMemo(() => {
-        return {
+    const {current: formStyle} = useRef<React.CSSProperties>({
             display: 'grid',
             gridTemplateRows: '1fr 1fr 1fr',
             gap: '2px',
             paddingBottom: '12px',
             margin: '14px'
-        }
-    }, []);
+        });
 
     useEffect(() => {
         const getFiled = async () => {
@@ -43,10 +42,18 @@ const Form = (): JSX.Element => {
         getFiled();
     }, []);
 
-    // useEffect(() => {
-    //     if(selectedOpt)
-    //         console.log(selectedOpt);
-    // }, [selectedOpt]);
+    useEffect(() => {
+        if(message === 'Dados enviados com sucesso!') {
+            setTimeout(() => {
+                setMessage('');
+            }, 2500);
+        }
+        else if(message === 'Valores carregados com sucesso!') {
+            setTimeout(() => {
+                setMessage('');
+            }, 2500);
+        }
+    }, [message]);
 
     const sendValues = useCallback(async () => {
         if(title && selectedOpt && description) {
@@ -54,6 +61,7 @@ const Form = (): JSX.Element => {
            if(res) {
                setTitle('');
                setDescription('');
+               setMessage('Dados enviados com sucesso!');
            }
         }
     }, [description, title, selectedOpt]);
@@ -61,12 +69,19 @@ const Form = (): JSX.Element => {
     const getItems = useCallback(async () => {
         const items = await listData();
         setListItems(items);
+        setMessage('Valores carregados com sucesso!');
     }, []);
 
     return (
     <div style={formStyle}>
-     <Input label="Título" onChange={(ev) => setTitle(ev.target.value)}/>
-     <Input label="Descrição" onChange={(ev) => setDescription(ev.target.value)}/>
+     <Input 
+        value={title}
+        label="Título" 
+        onChange={(ev) => setTitle(ev.target.value)}/>
+     <Input 
+        value={description}
+        label="Descrição" 
+        onChange={(ev) => setDescription(ev.target.value)}/>
      <ComboBox 
          options={opcoes} 
          value={selectedOpt}
@@ -75,6 +90,7 @@ const Form = (): JSX.Element => {
          }}/>
      <Button text="Enviar dados" onClick={() => sendValues()}/>
      <Button text="Buscar dados" onClick={async () => await getItems()}/>
+     {message && <h2>{message}</h2>}
      {listItems.length > 0 && 
      <ul>
         {listItems.map(item => 
