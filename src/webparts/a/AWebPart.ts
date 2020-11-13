@@ -1,31 +1,25 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
-import './components/fullWidth.css';
-import {sp} from '@pnp/sp';
 import { Version } from '@microsoft/sp-core-library';
-import { IPropertyPaneConfiguration, PropertyPaneTextField } from '@microsoft/sp-property-pane';
+import {
+  IPropertyPaneConfiguration,
+  PropertyPaneTextField
+} from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
-import * as strings from 'ExemploReactspfxWebPartStrings';
-import ExemploReactspfx from './components/ExemploReactspfx';
-import { IExemploReactspfxProps } from './components/IExemploReactspfxProps';
 
-export interface IExemploReactspfxWebPartProps {
+import * as strings from 'AWebPartStrings';
+import A from './components/A';
+import { IAProps } from './components/IAProps';
+
+export interface IAWebPartProps {
   description: string;
 }
 
-export default class ExemploReactspfxWebPart extends BaseClientSideWebPart<IExemploReactspfxWebPartProps> {
-
-  //Implementar esta linha, não vem por padrão
-  public async onInit(): Promise<void> {
-    await super.onInit();
-    sp.setup({
-      spfxContext: this.context
-    });
-  }
+export default class AWebPart extends BaseClientSideWebPart<IAWebPartProps> {
 
   public render(): void {
-    const element: React.ReactElement<IExemploReactspfxProps> = React.createElement(
-      ExemploReactspfx,
+    const element: React.ReactElement<IAProps> = React.createElement(
+      A,
       {
         description: this.properties.description
       }
@@ -37,7 +31,7 @@ export default class ExemploReactspfxWebPart extends BaseClientSideWebPart<IExem
   protected onDispose(): void {
     ReactDom.unmountComponentAtNode(this.domElement);
   }
-  //@ts-ignore
+
   protected get dataVersion(): Version {
     return Version.parse('1.0');
   }

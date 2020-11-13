@@ -29,4 +29,4 @@ const StyledInput = ({ customStyle, onChange, label, value }: IStyledInputProps)
                 </div>);
 };
 
-export default React.memo(StyledInput);
+export default StyledInput;

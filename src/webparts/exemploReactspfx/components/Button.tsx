@@ -30,4 +30,4 @@ const Button = ({ onClick, text }: IButtonProps) => {
         </div>);
 };
 
-export default React.memo(Button);
+export default Button;

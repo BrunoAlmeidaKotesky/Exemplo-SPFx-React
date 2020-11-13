@@ -9,10 +9,19 @@
           "manifest": "./src/webparts/exemploReactspfx/ExemploReactspfxWebPart.manifest.json"
         }
       ]
+    },
+    "a-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/a/AWebPart.js",
+          "manifest": "./src/webparts/a/AWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
   "localizedResources": {
-    "ExemploReactspfxWebPartStrings": "lib/webparts/exemploReactspfx/loc/{locale}.js"
+    "ExemploReactspfxWebPartStrings": "lib/webparts/exemploReactspfx/loc/{locale}.js",
+    "AWebPartStrings": "lib/webparts/a/loc/{locale}.js"
   }
 }

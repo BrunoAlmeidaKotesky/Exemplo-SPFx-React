@@ -1,0 +1,6 @@
+#workbenchPageContent{
+    max-width: none;
+  }
+  .SPCanvas-canvas,.CanvasZone{
+    max-width: none;
+  }

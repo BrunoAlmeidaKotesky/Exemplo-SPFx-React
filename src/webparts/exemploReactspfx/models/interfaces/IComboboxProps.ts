@@ -1,14 +1,14 @@
 
 export type OptionValue = string | number;
 
-export type Option<T extends OptionValue> = {
-    value: T;
+export type Option = {
+    value: OptionValue;
     label: string;
 };
 
-export interface IComboboxProps<T extends OptionValue> {
-    options: Option<T>[];
-    value: T;
-    onChange: (value: T) => void;
-    key?: keyof  T;
+export interface IComboboxProps {
+    options: Option[];
+    value: OptionValue;
+    onChange: (value: OptionValue) => void;
+    key?: keyof  OptionValue;
 };

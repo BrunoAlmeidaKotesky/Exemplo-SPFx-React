@@ -5,7 +5,7 @@ import {IComboboxProps, OptionValue} from '../models/interfaces/IComboboxProps';
 
 type RSelect = React.FormEvent<HTMLSelectElement>;
 
-const Combobox = <T extends OptionValue>({key, onChange, options, value}: IComboboxProps<T>) => {
+const Combobox = ({key, onChange, options, value}: IComboboxProps) => {
 
     //Lida com o evento de mudança das opções do select
     function handleOnChange(e: RSelect) {
@@ -35,4 +35,4 @@ const Combobox = <T extends OptionValue>({key, onChange, options, value}: ICombo
     );
 };
 
-export default React.memo(Combobox);
+export default Combobox;
